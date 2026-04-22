@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './infra/auth/auth.module';
 import { envSchema } from './infra/env/env';
 import { EnvModule } from './infra/env/env.module';
+import { HttpModule } from './infra/http/http.module';
 
 @Module({
 	imports: [
@@ -14,6 +15,7 @@ import { EnvModule } from './infra/env/env.module';
 		}),
 		AuthModule,
 		EnvModule,
+		HttpModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

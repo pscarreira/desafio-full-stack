@@ -9,11 +9,18 @@
 			"cache": false,
 			"persistent": true
 		},
+		"hash:password": {
+			"cache": false
+		},
 		"lint": {
 			"dependsOn": ["^lint"]
 		},
 		"test": {
 			"dependsOn": ["^build"]
+		},
+		"test:e2e": {
+			"dependsOn": ["^build"],
+			"cache": false
 		}
 	}
 }

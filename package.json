@@ -8,8 +8,10 @@
 	"scripts": {
 		"build": "turbo build",
 		"dev": "turbo dev",
+		"hash:password": "turbo run hash:password --filter=api --",
 		"lint": "turbo lint",
-		"test": "turbo test"
+		"test": "turbo test",
+		"test:e2e": "turbo run test:e2e --filter=api"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "latest",

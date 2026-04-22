@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { type Either, left, right } from '@/core/either';
 import { WrongCredentialsError } from '@/core/errors/errors/wrong-credentials-error';
@@ -42,7 +43,10 @@ export class AuthenticateUserUseCase {
 			return left(new WrongCredentialsError());
 		}
 
-		const accessToken = await this.encrypter.encrypt({ sub: email });
+		const accessToken = await this.encrypter.encrypt({
+			sub: randomUUID(),
+			preferred_username: email,
+		});
 
 		return right({ accessToken });
 	}
