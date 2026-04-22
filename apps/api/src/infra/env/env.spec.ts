@@ -7,6 +7,8 @@ describe('envSchema', () => {
 	const validEnv = {
 		JWT_PRIVATE_KEY: validBase64,
 		JWT_PUBLIC_KEY: validBase64,
+		TEST_USER: 'teste@teste.com',
+		TEST_USER_PASSWORD_HASH: 'hashed-password',
 	};
 
 	it('deve validar variáveis válidas', () => {
