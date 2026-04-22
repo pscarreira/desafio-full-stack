@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthenticateUserUseCase } from '@/domain/use-cases/authenticate-user';
+import { AuthenticateUserUseCase } from '@/domain/application/use-cases/authenticate-user';
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { EnvModule } from '../env/env.module';
 import { AuthenticateController } from './controllers/authenticate.controller';

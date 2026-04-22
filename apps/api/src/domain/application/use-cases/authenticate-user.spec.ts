@@ -1,6 +1,5 @@
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter';
 import { FakeHasher } from 'test/cryptography/fake-hasher';
-import { beforeEach, describe, expect, it } from 'vitest';
 import { WrongCredentialsError } from '@/core/errors/errors/wrong-credentials-error';
 import { AuthenticateUserUseCase } from './authenticate-user';
 

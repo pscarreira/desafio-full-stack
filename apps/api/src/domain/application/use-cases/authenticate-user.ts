@@ -2,8 +2,8 @@ import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { type Either, left, right } from '@/core/either';
 import { WrongCredentialsError } from '@/core/errors/errors/wrong-credentials-error';
-import { Encrypter } from '../application/cryptography/encrypter';
-import { HashComparer } from '../application/cryptography/hash-comparer';
+import { Encrypter } from '../cryptography/encrypter';
+import { HashComparer } from '../cryptography/hash-comparer';
 
 interface AuthenticateUserUseCaseRequest {
 	email: string;

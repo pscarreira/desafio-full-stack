@@ -9,9 +9,6 @@
 			"cache": false,
 			"persistent": true
 		},
-		"hash:password": {
-			"cache": false
-		},
 		"lint": {
 			"dependsOn": ["^lint"]
 		},

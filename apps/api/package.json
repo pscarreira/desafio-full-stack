@@ -6,7 +6,6 @@
 		"build": "nest build",
 		"dev": "nest start --watch",
 		"start": "node dist/main",
-		"hash:password": "node scripts/generate-password-hash.js",
 		"lint": "biome check ./src",
 		"test": "vitest run",
 		"test:watch": "vitest",
