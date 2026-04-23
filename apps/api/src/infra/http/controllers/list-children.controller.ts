@@ -1,7 +1,6 @@
 import { Controller, Get, HttpCode, Query, UsePipes } from '@nestjs/common';
 import { z } from 'zod';
 import { ListChildrenUseCase } from '@/domain/application/use-cases/list-children';
-import { Public } from '@/infra/auth/public';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
 import { ChildPresenter } from '../presenters/children-presenter';
 

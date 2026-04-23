@@ -1,6 +1,8 @@
 import { INestApplication } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test } from '@nestjs/testing';
+import { randomUUID } from 'crypto';
 import { Model } from 'mongoose';
 import request from 'supertest';
 import { makeChildDoc } from 'test/factories/make-child-doc';
@@ -10,10 +12,14 @@ import {
 	ChildDocument,
 	ChildModel,
 } from '@/infra/database/schemas/child.schema';
+import { EnvService } from '@/infra/env/env.service';
 
 describe('ListChildrenController (e2e)', () => {
 	let app: INestApplication;
 	let childModel: Model<ChildDocument>;
+	let jwt: JwtService;
+	let envService: EnvService;
+	let access_token: string;
 
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
@@ -26,6 +32,12 @@ describe('ListChildrenController (e2e)', () => {
 		childModel = moduleRef.get<Model<ChildDocument>>(
 			getModelToken(ChildModel.name),
 		);
+		jwt = moduleRef.get<JwtService>(JwtService);
+		envService = moduleRef.get<EnvService>(EnvService);
+		access_token = jwt.sign({
+			sub: randomUUID(),
+			preferred_username: envService.get('TEST_USER'),
+		});
 	});
 
 	afterAll(async () => {
@@ -39,7 +51,9 @@ describe('ListChildrenController (e2e)', () => {
 	it('deve retornar 200 e todas as crianças sem filtros', async () => {
 		await childModel.create([makeChildDoc(), makeChildDoc(), makeChildDoc()]);
 
-		const response = await request(app.getHttpServer()).get('/children');
+		const response = await request(app.getHttpServer())
+			.get('/children')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(200);
 		expect(response.body.children).toHaveLength(3);
@@ -52,9 +66,9 @@ describe('ListChildrenController (e2e)', () => {
 			makeChildDoc({ bairro: 'Rocinha' }),
 		]);
 
-		const response = await request(app.getHttpServer()).get(
-			'/children?bairro=Rocinha',
-		);
+		const response = await request(app.getHttpServer())
+			.get('/children?bairro=Rocinha')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(200);
 		expect(response.body.children).toHaveLength(2);
@@ -67,9 +81,9 @@ describe('ListChildrenController (e2e)', () => {
 			makeChildDoc({ revisado: false }),
 		]);
 
-		const response = await request(app.getHttpServer()).get(
-			'/children?revisado=false',
-		);
+		const response = await request(app.getHttpServer())
+			.get('/children?revisado=false')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(200);
 		expect(response.body.children).toHaveLength(2);
@@ -94,9 +108,9 @@ describe('ListChildrenController (e2e)', () => {
 			}),
 		]);
 
-		const response = await request(app.getHttpServer()).get(
-			'/children?comAlertas=true',
-		);
+		const response = await request(app.getHttpServer())
+			.get('/children?comAlertas=true')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(200);
 		expect(response.body.children).toHaveLength(2);
@@ -105,9 +119,9 @@ describe('ListChildrenController (e2e)', () => {
 	it('deve paginar os resultados', async () => {
 		await childModel.create(Array.from({ length: 25 }, () => makeChildDoc()));
 
-		const response = await request(app.getHttpServer()).get(
-			'/children?page=2&perPage=20',
-		);
+		const response = await request(app.getHttpServer())
+			.get('/children?page=2&perPage=20')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(200);
 		expect(response.body.children).toHaveLength(5);
@@ -117,9 +131,9 @@ describe('ListChildrenController (e2e)', () => {
 	it('deve retornar meta correta', async () => {
 		await childModel.create([makeChildDoc(), makeChildDoc()]);
 
-		const response = await request(app.getHttpServer()).get(
-			'/children?perPage=10',
-		);
+		const response = await request(app.getHttpServer())
+			.get('/children?perPage=10')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(200);
 		expect(response.body.meta).toEqual({
@@ -132,9 +146,9 @@ describe('ListChildrenController (e2e)', () => {
 	});
 
 	it('deve retornar 400 com query string desconhecida', async () => {
-		const response = await request(app.getHttpServer()).get(
-			'/children?foo=bar',
-		);
+		const response = await request(app.getHttpServer())
+			.get('/children?foo=bar')
+			.set('Authorization', `Bearer ${access_token}`);
 
 		expect(response.status).toBe(400);
 	});
@@ -156,9 +170,9 @@ describe('ListChildrenController (e2e)', () => {
 				makeChildDoc({ bairro: 'Maré' }),
 			]);
 
-			const response = await request(app.getHttpServer()).get(
-				'/children?bairro=Rocinha&comAlertas=true',
-			);
+			const response = await request(app.getHttpServer())
+				.get('/children?bairro=Rocinha&comAlertas=true')
+				.set('Authorization', `Bearer ${access_token}`);
 
 			expect(response.status).toBe(200);
 			expect(response.body.children).toHaveLength(1);
@@ -172,9 +186,9 @@ describe('ListChildrenController (e2e)', () => {
 				makeChildDoc({ bairro: 'Maré', revisado: true }),
 			]);
 
-			const response = await request(app.getHttpServer()).get(
-				'/children?bairro=Rocinha&revisado=true',
-			);
+			const response = await request(app.getHttpServer())
+				.get('/children?bairro=Rocinha&revisado=true')
+				.set('Authorization', `Bearer ${access_token}`);
 
 			expect(response.status).toBe(200);
 			expect(response.body.children).toHaveLength(1);
@@ -187,9 +201,9 @@ describe('ListChildrenController (e2e)', () => {
 				makeChildDoc({ revisado: false, ...comAlerta }),
 			]);
 
-			const response = await request(app.getHttpServer()).get(
-				'/children?revisado=true&comAlertas=true',
-			);
+			const response = await request(app.getHttpServer())
+				.get('/children?revisado=true&comAlertas=true')
+				.set('Authorization', `Bearer ${access_token}`);
 
 			expect(response.status).toBe(200);
 			expect(response.body.children).toHaveLength(1);
@@ -203,9 +217,9 @@ describe('ListChildrenController (e2e)', () => {
 				makeChildDoc({ bairro: 'Maré', revisado: true, ...comAlerta }),
 			]);
 
-			const response = await request(app.getHttpServer()).get(
-				'/children?bairro=Rocinha&revisado=true&comAlertas=true',
-			);
+			const response = await request(app.getHttpServer())
+				.get('/children?bairro=Rocinha&revisado=true&comAlertas=true')
+				.set('Authorization', `Bearer ${access_token}`);
 
 			expect(response.status).toBe(200);
 			expect(response.body.children).toHaveLength(1);
@@ -217,9 +231,9 @@ describe('ListChildrenController (e2e)', () => {
 				makeChildDoc({ bairro: 'Maré', revisado: true }),
 			]);
 
-			const response = await request(app.getHttpServer()).get(
-				'/children?bairro=Rocinha&revisado=true',
-			);
+			const response = await request(app.getHttpServer())
+				.get('/children?bairro=Rocinha&revisado=true')
+				.set('Authorization', `Bearer ${access_token}`);
 
 			expect(response.status).toBe(200);
 			expect(response.body.children).toHaveLength(0);
