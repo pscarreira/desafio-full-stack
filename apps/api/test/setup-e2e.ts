@@ -1,7 +1,10 @@
 import { config } from 'dotenv';
-import { generateKeyPairSync } from 'crypto';
+import { generateKeyPairSync, randomBytes } from 'crypto';
 import { hashSync } from 'bcryptjs';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import { MongoClient } from 'mongodb';
+
+// Carrega .env.test com override para garantir que sobrescreve variáveis do .env
+config({ path: '.env.test', override: true });
 
 // Cria chaves RSA e credenciais para testes
 function setupTestCredentials() {
@@ -36,20 +39,24 @@ function setupTestCredentials() {
 	process.env.TEST_USER_PASSWORD_HASH = hashSync(testPassword, 10);
 }
 
-// Carrega .env.test com override para garantir que sobrescreve variáveis do .env
-config({ path: '.env.test', override: true });
+function setupDatabase() {
+	const host = process.env.MONGO_HOST ?? 'localhost';
+	const port = process.env.MONGO_PORT ?? '27017';
+	const dbName = `test_${randomBytes(6).toString('hex')}`;
+	process.env.MONGO_URI = `mongodb://${host}:${port}/${dbName}`;
+}
 
-// Setup das credenciais 
+async function dropDatabase() {
+	const client = new MongoClient(process.env.MONGO_URI!);
+	await client.connect();
+	await client.db().dropDatabase();
+	await client.close();
+}
+
+// Setup das credenciais e banco
 setupTestCredentials();
-
-// Sobe o banco em memória
-let mongod: MongoMemoryServer;
-
-beforeAll(async () => {
-	mongod = await MongoMemoryServer.create();
-	process.env.MONGO_URI = mongod.getUri();
-});
+setupDatabase();
 
 afterAll(async () => {
-	await mongod.stop();
+	await dropDatabase();
 });

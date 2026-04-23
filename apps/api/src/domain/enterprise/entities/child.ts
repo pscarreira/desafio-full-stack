@@ -76,6 +76,18 @@ export class Child extends Entity<ChildProps> {
 		return this.props.revisadoEm;
 	}
 
+	set revisado(value: boolean) {
+		this.props.revisado = value;
+	}
+
+	set revisadoPor(value: string | null) {
+		this.props.revisadoPor = value;
+	}
+
+	set revisadoEm(value: Date | null) {
+		this.props.revisadoEm = value;
+	}
+
 	static create(props: ChildProps, id?: UniqueEntityID) {
 		const child = new Child(props, id);
 		return child;
