@@ -10,7 +10,8 @@
 		"dev": "turbo dev",
 		"lint": "turbo lint",
 		"test": "turbo test",
-		"test:e2e": "turbo run test:e2e --filter=api"
+		"test:e2e": "turbo run test:e2e --filter=api",
+		"seed": "turbo run seed --filter=api"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "latest",
