@@ -9,6 +9,7 @@ describe('envSchema', () => {
 		JWT_PUBLIC_KEY: validBase64,
 		TEST_USER: 'teste@teste.com',
 		TEST_USER_PASSWORD_HASH: 'hashed-password',
+		MONGO_URI: 'mongodb://localhost:27017/testdb',
 	};
 
 	it('deve validar variáveis válidas', () => {

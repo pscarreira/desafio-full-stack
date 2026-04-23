@@ -1,7 +1,7 @@
-import { envSchema } from '@/infra/env/env';
 import { config } from 'dotenv';
 import { generateKeyPairSync } from 'crypto';
 import { hashSync } from 'bcryptjs';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
 // Cria chaves RSA e credenciais para testes
 function setupTestCredentials() {
@@ -39,8 +39,17 @@ function setupTestCredentials() {
 // Carrega .env.test com override para garantir que sobrescreve variáveis do .env
 config({ path: '.env.test', override: true });
 
-// Setup das credenciais de teste (sempre regenera para garantir validação)
+// Setup das credenciais 
 setupTestCredentials();
 
-// Valida as variáveis de ambiente
-const env = envSchema.parse(process.env);
+// Sobe o banco em memória
+let mongod: MongoMemoryServer;
+
+beforeAll(async () => {
+	mongod = await MongoMemoryServer.create();
+	process.env.MONGO_URI = mongod.getUri();
+});
+
+afterAll(async () => {
+	await mongod.stop();
+});
