@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, HttpCode, Query } from '@nestjs/common';
 import { z } from 'zod';
 import { ListChildrenUseCase } from '@/domain/application/use-cases/list-children';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe';
