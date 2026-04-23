@@ -6,6 +6,7 @@ export const envSchema = z.object({
 	JWT_PUBLIC_KEY: z.base64(),
 	TEST_USER: z.email(),
 	TEST_USER_PASSWORD_HASH: z.string(),
+	MONGO_URI: z.url(),
 });
 
 export type Env = z.infer<typeof envSchema>;
