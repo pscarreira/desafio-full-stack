@@ -1,9 +1,5 @@
 import { expect, test } from '@playwright/test';
-
-function makeFakeToken(): string {
-	const payload = btoa(JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 3600 }));
-	return `header.${payload}.signature`;
-}
+import { makeFakeToken } from './helpers';
 
 test.describe('Página de Login', () => {
 	test.beforeEach(async ({ page }) => {
