@@ -15,9 +15,25 @@
 		"test": {
 			"dependsOn": ["^build"]
 		},
-		"test:e2e": {
+		"test:watch": {
+			"cache": false,
+			"persistent": true
+		},
+		"test:cov": {
+			"dependsOn": ["^build"],
+			"outputs": ["coverage/**"]
+		},
+		"test:e2e:api": {
 			"dependsOn": ["^build"],
 			"cache": false
+		},
+		"test:e2e:web": {
+			"dependsOn": ["^build"],
+			"cache": false
+		},
+		"test:e2e:web:ui": {
+			"cache": false,
+			"persistent": true
 		},
 		"seed": {
 			"cache": false

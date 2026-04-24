@@ -10,7 +10,7 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:cov": "vitest run --coverage",
-		"test:e2e": "vitest -c vitest.config.e2e.ts",
+		"test:e2e:api": "vitest -c vitest.config.e2e.ts",
 		"seed": "ts-node -r tsconfig-paths/register scripts/seed.ts"
 	},
 	"dependencies": {

@@ -10,11 +10,14 @@
 		"dev": "turbo dev",
 		"lint": "turbo lint",
 		"test": "turbo test",
-		"test:e2e": "turbo run test:e2e --filter=api",
+		"test:e2e:api": "turbo run test:e2e:api --filter=api",
+		"test:e2e:web": "turbo run test:e2e:web --filter=web",
+		"test:e2e:web:ui": "turbo run test:e2e:web:ui --filter=web",
 		"seed": "turbo run seed --filter=api"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "latest",
+		"@playwright/test": "^1.59.1",
 		"turbo": "latest"
 	}
 }
