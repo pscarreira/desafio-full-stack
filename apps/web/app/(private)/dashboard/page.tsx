@@ -1,5 +1,9 @@
 'use client';
 
 export default function DashboardPage() {
-	return <main className="container mx-auto px-4 py-8">Autenticado</main>;
+	return (
+		<div className="flex p-6">
+			<h1 className="text-2xl font-bold">Dashboard</h1>
+		</div>
+	);
 }
