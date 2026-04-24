@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
+import { QueryProvider } from '@/lib/query-provider';
 import { ThemeProvider } from './theme/theme-provider';
 import { ThemeToggle } from './theme/theme-toggle';
 import './index.css';
@@ -29,10 +30,12 @@ export default function RootLayout({
 					enableSystem={false}
 					disableTransitionOnChange
 				>
-					<div className="fixed bottom-4 right-4 z-50">
-						<ThemeToggle />
-					</div>
-					{children}
+					<QueryProvider>
+						<div className="fixed bottom-4 right-4 z-50">
+							<ThemeToggle />
+						</div>
+						{children}
+					</QueryProvider>
 				</ThemeProvider>
 			</body>
 		</html>
