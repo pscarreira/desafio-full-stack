@@ -1,10 +1,6 @@
-import { Button } from '@/components/ui/button';
-
+// A rota raiz é gerenciada pelo middleware:
+// - autenticado   → /dashboard
+// - não autenticado → /login
 export default function Home() {
-	return (
-		<main>
-			<h1>Desafio Full Stack</h1>
-			<Button>Click me</Button>
-		</main>
-	);
+	return null
 }
