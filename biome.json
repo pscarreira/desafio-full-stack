@@ -29,6 +29,14 @@
 			"quoteStyle": "single"
 		}
 	},
+	"css": {
+		"linter": {
+			"enabled": true
+		},
+		"formatter": {
+			"indentStyle": "tab"
+		}
+	},
 	"assist": {
 		"enabled": true,
 		"actions": {
