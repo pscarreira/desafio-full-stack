@@ -36,7 +36,7 @@ export class ListChildrenUseCase {
 		page = 1,
 		perPage = 20,
 	}: ListChildrenUseCaseRequest): Promise<ListChildrenUseCaseResponse> {
-		const children = await this.childRepository.findAll(
+		const { children, total } = await this.childRepository.findAll(
 			{ bairro, comAlertas, revisado },
 			page,
 			perPage,
@@ -45,10 +45,10 @@ export class ListChildrenUseCase {
 		return right({
 			children,
 			meta: {
-				totalItems: children.length,
+				totalItems: total,
 				itemCount: children.length,
 				itemsPerPage: perPage,
-				totalPages: Math.ceil(children.length / perPage),
+				totalPages: Math.ceil(total / perPage),
 				currentPage: page,
 			},
 		});

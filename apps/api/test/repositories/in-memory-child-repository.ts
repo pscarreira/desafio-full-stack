@@ -14,7 +14,7 @@ export class InMemoryChildRepository extends ChildRepository {
 		filters: ChildFilters,
 		page = 1,
 		pageSize = 20,
-	): Promise<Child[]> {
+	): Promise<{ children: Child[]; total: number }> {
 		let result = this.items;
 
 		if (filters.bairro) {
@@ -38,8 +38,9 @@ export class InMemoryChildRepository extends ChildRepository {
 			});
 		}
 
+		const total = result.length;
 		const skip = (page - 1) * pageSize;
-		return result.slice(skip, skip + pageSize);
+		return { children: result.slice(skip, skip + pageSize), total };
 	}
 
 	async summary(): Promise<ChildSummary> {

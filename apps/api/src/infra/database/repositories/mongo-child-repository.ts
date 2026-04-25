@@ -27,7 +27,7 @@ export class MongoChildRepository extends ChildRepository {
 		filters: ChildFilters,
 		page = 1,
 		pageSize = 20,
-	): Promise<Child[]> {
+	): Promise<{ children: Child[]; total: number }> {
 		const query: QueryFilter<ChildDocument> = {};
 
 		if (filters.bairro) {
@@ -53,12 +53,11 @@ export class MongoChildRepository extends ChildRepository {
 		}
 
 		const skip = (page - 1) * pageSize;
-		const docs = await this.childModel
-			.find(query)
-			.skip(skip)
-			.limit(pageSize)
-			.exec();
-		return docs.map(ChildMapper.toDomain);
+		const [docs, total] = await Promise.all([
+			this.childModel.find(query).skip(skip).limit(pageSize).exec(),
+			this.childModel.countDocuments(query).exec(),
+		]);
+		return { children: docs.map(ChildMapper.toDomain), total };
 	}
 
 	async summary(): Promise<ChildSummary> {
