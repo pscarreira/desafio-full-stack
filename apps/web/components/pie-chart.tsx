@@ -20,6 +20,13 @@ interface PieChartProps {
 	isLoading: boolean;
 }
 
+const PIE_CHART_MARGIN = {
+	top: 20,
+	right: 36,
+	bottom: 20,
+	left: 36,
+};
+
 export function PieChart({ title, data, valueLabel = 'Valor', isLoading }: PieChartProps) {
 	const chartConfig: ChartConfig = {
 		value: { label: valueLabel },
@@ -37,8 +44,8 @@ export function PieChart({ title, data, valueLabel = 'Valor', isLoading }: PieCh
 				{isLoading ? (
 					<div className="h-48 w-48 animate-pulse rounded-full bg-muted" />
 				) : (
-					<ChartContainer config={chartConfig} className="h-48 w-full">
-						<RechartsPieChart>
+					<ChartContainer config={chartConfig} className="h-56 w-full">
+						<RechartsPieChart margin={PIE_CHART_MARGIN}>
 							<ChartTooltip content={<ChartTooltipContent nameKey="name" />} />
 							<Pie
 								data={data}
@@ -47,7 +54,7 @@ export function PieChart({ title, data, valueLabel = 'Valor', isLoading }: PieCh
 								cx="50%"
 								cy="50%"
 								innerRadius={50}
-								outerRadius={80}
+								outerRadius={72}
 								label={({ name, value }) => `${name}: ${value}`}
 								labelLine={false}
 							/>
