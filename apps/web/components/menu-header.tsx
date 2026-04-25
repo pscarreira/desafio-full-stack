@@ -62,9 +62,9 @@ export default function MenuHeader({
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuLink
-              render={<Link href="/dashboard/children" />}
+              render={<Link href="/children-list" />}
               className={navLinkClass}
-              active={pathname.startsWith('/dashboard/children')}
+              active={pathname.startsWith('/children-list')}
               aria-label="Listagem de crianças"
             >
               Crianças
@@ -108,7 +108,7 @@ export default function MenuHeader({
           <Button
             variant="secondary"
             className="w-full justify-start"
-            render={<Link href="/dashboard/children" aria-label="Listagem de crianças" />}
+            render={<Link href="/children-list" aria-label="Listagem de crianças" />}
             onClick={() => setMobileOpen(false)}
           >
             Crianças

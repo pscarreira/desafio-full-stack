@@ -7,7 +7,7 @@ export default function PrivateLayout({
 }) {
 	return (
 		<div className="min-h-screen bg-background">
-			<MenuHeader className="mb-1">{children}</MenuHeader>
+			<MenuHeader className="mb-1" />
 			{children}
 		</div>
 	);
