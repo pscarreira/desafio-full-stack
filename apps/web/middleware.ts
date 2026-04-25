@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 const PUBLIC_ROUTES = ['/login', '/register', '/unauthorized']
-const PRIVATE_ROUTES = ['/dashboard', '/profile', '/children-list']
+const PRIVATE_ROUTES = ['/dashboard', '/profile', '/children-list', '/children-details']
 
 function isTokenExpired(token: string): boolean {
 	try {

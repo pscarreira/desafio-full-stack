@@ -66,7 +66,13 @@ async function getChildren(filters: ChildrenFilters = {}): Promise<ChildrenRespo
 }
 
 async function getChildById(id: string): Promise<Child> {
-	return apiClient.get<Child>(`/children/${id}`);
+	const response = await apiClient.get<{ child: Child }>(`/children/${id}`);
+	return response.child;
 }
 
-export const childrenService = { getChildren, getChildById };
+async function reviewChild(id: string): Promise<Child> {
+	const response = await apiClient.patch<{ child: Child }>(`/children/${id}/review`);
+	return response.child;
+}
+
+export const childrenService = { getChildren, getChildById, reviewChild };

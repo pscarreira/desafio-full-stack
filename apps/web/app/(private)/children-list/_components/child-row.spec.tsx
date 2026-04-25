@@ -95,6 +95,6 @@ describe('ChildRow', () => {
 		renderRow(makeChild({ id: 'abc-123', nome: 'João' }));
 
 		const link = screen.getByRole('link', { name: /ver detalhes de joão/i });
-		expect(link).toHaveAttribute('href', '/child/abc-123');
+		expect(link).toHaveAttribute('href', '/children-details/abc-123');
 	});
 });

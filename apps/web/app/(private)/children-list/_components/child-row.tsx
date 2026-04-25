@@ -48,7 +48,7 @@ export function ChildRow({ child }: ChildRowProps) {
 			<TableCell>
 				<Button variant="ghost" size="icon-sm">
 					<Link
-						href={`/child/${child.id}`}
+						href={`/children-details/${child.id}`}
 						aria-label={`Ver detalhes de ${child.nome}`}
 					>
 						<Eye />
