@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { Eye } from 'lucide-react';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { TableCell, TableRow } from './ui/table';
+import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { TableCell, TableRow } from '@/components/ui/table';
 import type { Child } from '@/lib/api';
 
 function totalAlerts(child: Child): number {
@@ -38,14 +38,19 @@ export function ChildRow({ child }: ChildRowProps) {
 			</TableCell>
 			<TableCell>
 				{alerts > 0 ? (
-					<Badge variant="destructive">{alerts} alerta{alerts > 1 ? 's' : ''}</Badge>
+					<Badge variant="destructive">
+						{alerts} alerta{alerts > 1 ? 's' : ''}
+					</Badge>
 				) : (
 					<span className="text-muted-foreground text-xs">Nenhum</span>
 				)}
 			</TableCell>
 			<TableCell>
 				<Button variant="ghost" size="icon-sm">
-					<Link href={`/child/${child.id}`} aria-label={`Ver detalhes de ${child.nome}`}>
+					<Link
+						href={`/child/${child.id}`}
+						aria-label={`Ver detalhes de ${child.nome}`}
+					>
 						<Eye />
 					</Link>
 				</Button>
