@@ -33,15 +33,13 @@ ENV NODE_ENV=production
 
 COPY --from=prod-deps /workspace/node_modules /workspace/node_modules
 COPY --from=builder /workspace/apps/api/dist ./dist
+COPY --from=builder /workspace/apps/api/dist-seed ./dist-seed
 COPY --from=builder /workspace/apps/api/package.json ./package.json
+COPY data /workspace/data
+COPY apps/api/docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 3001
 
-CMD ["node", "dist/src/main.js"]
-
-FROM runtime AS seed
-
-COPY --from=builder /workspace/apps/api/dist-seed ./dist-seed
-COPY data /workspace/data
-
-CMD ["node", "dist-seed/seed.js"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
