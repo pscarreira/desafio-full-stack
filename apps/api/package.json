@@ -4,14 +4,16 @@
 	"private": true,
 	"scripts": {
 		"build": "nest build",
+		"build:seed": "tsc -p tsconfig.seed.json",
 		"dev": "nest start --watch",
-		"start": "node dist/main",
+		"start": "node dist/src/main.js",
 		"lint": "biome check ./src",
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"test:cov": "vitest run --coverage",
 		"test:e2e:api": "vitest -c vitest.config.e2e.ts",
-		"seed": "ts-node -r tsconfig-paths/register scripts/seed.ts"
+		"seed": "ts-node -r tsconfig-paths/register scripts/seed.ts",
+		"seed:docker": "node dist-seed/scripts/seed.js"
 	},
 	"dependencies": {
 		"@nestjs/common": "^10.0.0",

@@ -3,14 +3,9 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import { config } from 'dotenv';
 import mongoose from 'mongoose';
-import { SchemaFactory } from '@nestjs/mongoose';
-import { ChildModel } from '../src/infra/database/schemas/child.schema';
-import { AlertaSaude } from '../src/core/enums/alerta-saude';
-import { AlertaEducacao } from '../src/core/enums/alerta-educacao';
-import { AlertaAssistenciaSocial } from '../src/core/enums/alerta-assistencia-social';
 
-const SEED_PATH = path.resolve(__dirname, '../../../data/seed.json');
-config({ path: path.resolve(__dirname, '../.env') });
+const SEED_PATH = path.resolve(process.cwd(), '../../data/seed.json');
+config({ path: path.resolve(process.cwd(), '.env') });
 
 interface SeedSaude {
 	ultima_consulta: string | null;
@@ -56,21 +51,21 @@ function mapSeedToDocument(child: SeedChild) {
 						? new Date(child.saude.ultima_consulta)
 						: null,
 					vacinasEmDia: child.saude.vacinas_em_dia,
-					alertas: child.saude.alertas as AlertaSaude[],
+						alertas: child.saude.alertas,
 				}
 			: null,
 		educacao: child.educacao
 			? {
 					escola: child.educacao.escola,
 					frequenciaPercent: child.educacao.frequencia_percent,
-					alertas: child.educacao.alertas as AlertaEducacao[],
+						alertas: child.educacao.alertas,
 				}
 			: null,
 		assistenciaSocial: child.assistencia_social
 			? {
 					cadUnico: child.assistencia_social.cad_unico,
 					beneficioAtivo: child.assistencia_social.beneficio_ativo,
-					alertas: child.assistencia_social.alertas as AlertaAssistenciaSocial[],
+						alertas: child.assistencia_social.alertas,
 				}
 			: null,
 		revisado: child.revisado,
@@ -92,16 +87,27 @@ async function seed() {
 	await mongoose.connect(mongoUri);
 	console.log('Conectado ao MongoDB.');
 
-	const ChildSchema = SchemaFactory.createForClass(ChildModel);
-	const ChildModelMongo =
-		mongoose.models['ChildModel'] ??
-		mongoose.model('ChildModel', ChildSchema, 'children');
+	const childrenCollection = mongoose.connection.collection('children');
 
-	await ChildModelMongo.deleteMany({});
-	console.log('Coleção "children" limpa.');
+	const existingCount = await childrenCollection.countDocuments({});
+	const forceSeed = process.env.FORCE_SEED === 'true';
+
+	if (existingCount > 0 && !forceSeed) {
+		console.log(
+			`Seed ignorado: coleção "children" já possui ${existingCount} registros.`,
+		);
+		await mongoose.disconnect();
+		console.log('Desconectado.');
+		return;
+	}
+
+	if (forceSeed) {
+		await childrenCollection.deleteMany({});
+		console.log('Coleção "children" limpa por FORCE_SEED=true.');
+	}
 
 	const docs = seedData.map(mapSeedToDocument);
-	await ChildModelMongo.insertMany(docs);
+	await childrenCollection.insertMany(docs);
 	console.log(`${docs.length} registros inseridos com sucesso.`);
 
 	await mongoose.disconnect();

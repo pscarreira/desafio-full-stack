@@ -1,0 +1,13 @@
+.git
+.turbo
+.vscode
+node_modules
+apps/api/node_modules
+apps/web/node_modules
+apps/api/dist
+apps/web/.next
+apps/web/playwright-report
+apps/web/test-results
+test-results
+npm-debug.log*
+*.log

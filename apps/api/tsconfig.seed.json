@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist-seed",
+    "declaration": false,
+    "sourceMap": false,
+    "incremental": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "test",
+    "**/*.spec.ts",
+    "**/*.e2e-spec.ts",
+    "node_modules"
+  ]
+}

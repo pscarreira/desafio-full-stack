@@ -1,0 +1,138 @@
+x-api-env: &api-env
+  PORT: 3001
+  NODE_ENV: production
+  CORS_ORIGIN: http://localhost:3000
+  JWT_PRIVATE_KEY: "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2UUlCQURBTkJna3Foa\
+    2lHOXcwQkFRRUZBQVNDQktjd2dnU2pBZ0VBQW9JQkFRQ3pGaXduY08yYXNhemYKY242aFZXdmpx\
+    d2RmMnVJWEZhdmZkamRkMjVGcWNyUHpQbDY0SW56ZTQ3R290Nlo1eG4yazk5eUN3R3RKWjhiMwp\
+    QcUpuajZjOGdnN09ObUFQditEWW5kMXdBdDhGOHp3TlU5b2VrSTF1VzkvNEdqcHVwVzdjSjNma1\
+    RIOXVaQy9mCjJZSlFHVGxDeWRjK1AzMFJRd0NiUHB1UVcxZk0wQXRwbG1oMGVjOVJOSXUvK1UwQ\
+    zM0cDlyUzAwa0hET09XM0sKaitxVW9rK3lTdm9jWVl1bEtxV3psVWVwWnpqbjE2SGFBczVad0w2\
+    TnFUeThydXE4eGIrMnpJVWo5Vnc2Q0tZYworSjJ3MkFKVDBuNXkraDNxMGFDR1pzL1dWR29lV29\
+    qWFdNa1hwNXVweDZ5bEtQNi8zN0Ztcm5KYlhBdXR5Y240CnRxYmtpQmNsQWdNQkFBRUNnZ0VBSz\
+    ZpbklRSmwyb1dnT0dVb085cWdUOE45SzhBbnlDcnZXSzN3TjRCMHhmZXEKcVEwMmVEdG9KOHBvb\
+    0ZJTlVyaXlIc3FTUm9uMFhkUGY3SnluYVFuYlltUHVpaFUxZkFGeUpqenVKQVYvSzJzdAo0NjNp\
+    aWZzQmo3cjBNZjdxNmRpSTIwRC8rSGN4eGM3RTRSU2NzVHhFK21STWhnOWlSUmdKaU05TmkzYkp\
+    ROU8zCkpYdDlSSmYzbjlyT1QzNDU1aVYrNEtMSVJXdWZjYUtqY1VaTXhIKzU4Y25WT3Y0OEtNWm\
+    tjek5SY2ZhcEJ5R3MKOXU0L2pWL1NmczNLckEyK0FIeGtjTDBrd3FlRFJzQk1od25Ib0RSYjF6W\
+    WQvL1F5ZUo3eXh5SEVmbU5VMHF0OQpOTEpWbzZFbW1Od3NpU0UzMEN3WVo3NkY0OXdUT2JUcFRq\
+    OUhjMnh3TFFLQmdRRHcwN016dUVqSDRUc1poOFdCCnVhUmxneU1Sa2ZCQXY0N1NyaWgzNExvVHB\
+    tV1laNWdkdVZpNUFkUEpXdGZxZ0VRQTlvME5WdWQ1a3RjU3FpZTUKTEdJUmVJbmVsUXl6b1pwQl\
+    F1UHBwSFZlQmhHRkFJMnU2V1Brd3hzKzl6SFZiVHBkUnJoOGhKMUJ0akF6NW9MSwozNW91aXNqV\
+    zdrYW9IOE5BTFk2STRESWJHd0tCZ1FDK1hxbDJoano2anNlZ3Z1SWlhZERJZmRxTGlYQnc5bVBs\
+    CkgydXBWQmo0TWxyWW9jYXJ4Umw2MTFsK1diWExNZ0FhVlZrcFB6dkgrVnUyNXJzQzNvY0RPaTV\
+    mbklwQWdXM1EKQ21LcEp5ajVaSlpaaVRTRnZzUWZqWlBGalloVytKMk5haVZ0MnRPMWpoYmxnUk\
+    9mOWhCM05ubnNGSFh4TytPbgo2aEpnKzJGNnZ3S0JnUUNxQnUwWWNOMkJzVFVHbTJNSWFjYjFuS\
+    lpmeTBkeWowd0kxc2pmaWh3VnozOGZFTlRHCjk1cjZVNTN4SldBWHdpTkJBdEVuUDlvQmJYakhS\
+    cmJ3OTdMdFhzc0lDUGVFdzIyaThkVHptaGI3SVJHeGMyaVUKdTFhNXBqNVFRRHBBMHZOSDg2eEF\
+    6V2d4Z3EyWmx2OTB1RldrMG50bHM2alMva25kdjh4SU92RmxUUUtCZ0diUgo4QXVoUTJ3OUU5dG\
+    hYZmdpV084QThyb3MrSHM2eVFlbXFkcWlIbjVuakNPM2RQdXZrQ3lHQmNNMXB2Zmh3S1o0CmRKa\
+    lBtM1ZOM0ZoMFZJdWZMeUx5R0x2eGE0YWRZWGRkTko2U0ZSSm1Yc0pyVmQvckFqamNtZlM0bGV3\
+    TGllVW8KY0tEZDhUejlTcWFZeWNXNi9IZTNCN0VYOS8vY1RnQ1NiMnpNT1lFM0FvR0FEa2ovc0p\
+    rUWdBWVhRUXBuQ094YwpYcXJLMXQxZmRSdTFKMVhiV1k1WlR1QkxoSkhuSTQybzRPZnNhWUdJTV\
+    B1YXZaZnBQbk5KNFpDZTRjbDVOMmF5ClFlRlZTYXZTeFZtVXZHbGdiZkk3OGVDYzczSENVZXlBL\
+    3NNYzUrTTI1Szl6MmVXbHBIbUFmY09MOUQ0eE4wQSsKaFpVMUlzYjJyajJWMURSa1NJb3l4Y2s9\
+    Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K"
+  JWT_PUBLIC_KEY: "LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3ME\
+    JBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUFzeFlzSjNEdG1yR3MzM0orb1ZWcgo0NnNIWDlyaUZ4V\
+    3IzM1kzWGR1UmFuS3o4ejVldUNKODN1T3hxTGVtZWNaOXBQZmNnc0JyU1dmRzl6NmlaNCtuClBJ\
+    SU96alpnRDcvZzJKM2RjQUxmQmZNOERWUGFIcENOYmx2ZitCbzZicVZ1M0NkMzVFeC9ibVF2Mzl\
+    tQ1VCazUKUXNuWFBqOTlFVU1BbXo2YmtGdFh6TkFMYVpab2RIblBVVFNMdi9sTkF0K0tmYTB0Tk\
+    pCd3pqbHR5by9xbEtKUApza3I2SEdHTHBTcWxzNVZIcVdjNDU5ZWgyZ0xPV2NDK2phazh2Szdxd\
+    k1XL3RzeUZJL1ZjT2dpbUhQaWRzTmdDClU5Sitjdm9kNnRHZ2htYlAxbFJxSGxxSTExakpGNmVi\
+    cWNlc3BTait2OSt4WnE1eVcxd0xyY25KK0xhbTVJZ1gKSlFJREFRQUIKLS0tLS1FTkQgUFVCTEl\
+    DIEtFWS0tLS0t"
+  TEST_USER: tecnico@prefeitura.rio
+  TEST_USER_PASSWORD_HASH: "$$2b$$10$$yPveM9royfGEUvIFdJZCJOW2SMVL/jVd.gIGQYmnGJVsBORx7Il2i"
+  MONGO_URI: mongodb://testeprefeitura:testebancoprefeitura@mongo:27017/desafio-full-stack
+
+services:
+  mongo:
+    image: mongo:7
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_root
+      MONGO_INITDB_ROOT_PASSWORD: mongo_root_password
+      MONGO_APP_USERNAME: testeprefeitura
+      MONGO_APP_PASSWORD: testebancoprefeitura
+      MONGO_APP_DATABASE: desafio-full-stack
+    volumes:
+      - mongo-data:/data/db
+      - ./docker/mongo/init-user.sh:/docker-entrypoint-initdb.d/init-user.sh:ro
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mongosh --quiet
+            mongodb://$$MONGO_INITDB_ROOT_USERNAME:$$MONGO_INITDB_ROOT_PASSWORD\
+            @localhost:27017/admin --eval \"quit(db.runCommand({ ping: 1 }).ok ?
+            0 : 1)\"",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  api-seed:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: seed
+    environment: *api-env
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: runtime
+    environment: *api-env
+    depends_on:
+      mongo:
+        condition: service_healthy
+      api-seed:
+        condition: service_completed_successfully
+    ports:
+      - "3001:3001"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:3001').then(() =>
+            process.exit(0)).catch(() => process.exit(1))\"",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: runner
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3001
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://' + process.env.HOSTNAME + ':3000').then(()
+            => process.exit(0)).catch(() => process.exit(1))\"",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  mongo-data:
