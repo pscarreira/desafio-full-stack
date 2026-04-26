@@ -1,0 +1,18 @@
+# Force LF for shell scripts (required for Docker)
+*.sh text eol=lf
+docker-entrypoint.sh text eol=lf
+
+# Ensure line endings for all text files
+*.json text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.md text eol=lf
+
+# Treat binary files as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
