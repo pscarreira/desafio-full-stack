@@ -1,19 +1,5 @@
 import { apiClient } from './client';
-
-export interface ChildSummary {
-  totalChildren: number;
-  reviewed: number;
-  alertsByArea: {
-    saude: number;
-    educacao: number;
-    assistenciaSocial: number;
-  };
-  percentageWithAlertsByArea: {
-    saude: number;
-    educacao: number;
-    assistenciaSocial: number;
-  };
-}
+import type { ChildSummary } from './types';
 
 interface SummaryResponse {
   summary: ChildSummary;
